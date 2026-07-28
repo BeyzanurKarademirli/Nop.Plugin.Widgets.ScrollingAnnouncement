@@ -1,0 +1,141 @@
+@model Nop.Plugin.Widgets.ScrollingAnnouncement.Models.AnnouncementModel
+@{
+    Layout = "_ConfigurePlugin";
+    var announcements = ViewBag.Announcements as List<Nop.Plugin.Widgets.ScrollingAnnouncement.Models.AnnouncementModel>;
+    bool isEdit = Model != null && Model.Id > 0;
+}
+
+<div class="content-header clearfix">
+    <h1 class="float-left">
+        Kayan Yazı Duyuruları Yönetimi
+    </h1>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <!-- Ekleme / Güncelleme Formu -->
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-edit"></i>
+                    @(isEdit ? "Duyuruyu Düzenle (ID: " + Model.Id + ")" : "Yeni Duyuru Ekle")
+                </h3>
+            </div>
+            <form asp-controller="WidgetsScrollingAnnouncement" asp-action="@(isEdit ? "Edit" : "Create")" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label asp-for="Text" class="col-form-label font-weight-bold">Duyuru Metni</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input asp-for="Text" class="form-control" placeholder="Örn: %20 İndirim Fırsatını Kaçırmayın!" />
+                            <span asp-validation-for="Text" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label asp-for="Color" class="col-form-label font-weight-bold">Duyuru Rengi</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input asp-for="Color" type="color" class="form-control form-control-color" value="@(string.IsNullOrWhiteSpace(Model.Color) ? "#4a0e17" : Model.Color)" style="height: 38px; width: 100px; padding: 2px;" />
+                            <span asp-validation-for="Color" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label asp-for="DisplayOrder" class="col-form-label font-weight-bold">Gösterim Sırası</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input asp-for="DisplayOrder" type="number" class="form-control" value="@Model.DisplayOrder" />
+                            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <label asp-for="IsActive" class="col-form-label font-weight-bold">Aktif mi?</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-check pt-2">
+                                <input asp-for="IsActive" type="checkbox" class="form-check-input" style="width: 18px; height: 18px;" />
+                                <label asp-for="IsActive" class="form-check-label ml-2">Evet (Yayında)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> @(isEdit ? "Güncelle" : "Kaydet")
+                    </button>
+                    @if (isEdit)
+                    {
+                        <a href="/Admin/WidgetsScrollingAnnouncement/Configure" class="btn btn-default ml-2">Vazgeç / Yeni Ekle</a>
+                    }
+                </div>
+            </form>
+        </div>
+
+        <!-- Kayıtlı Duyurular Tablosu (List) -->
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-list"></i> Mevcut Duyurular Listesi
+                </h3>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">ID</th>
+                            <th>Duyuru Metni</th>
+                            <th style="width: 120px;">Renk</th>
+                            <th style="width: 100px;">Sıra</th>
+                            <th style="width: 100px;">Durum</th>
+                            <th style="width: 150px;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (announcements != null && announcements.Any())
+                        {
+                            foreach (var item in announcements)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Text</td>
+                                    <td>
+                                        <span class="badge" style="background-color: @item.Color; color: #fff; padding: 6px 12px; font-size: 13px;">@item.Color</span>
+                                    </td>
+                                    <td>@item.DisplayOrder</td>
+                                    <td>
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="badge badge-success" style="padding: 6px 10px;">Aktif</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-secondary" style="padding: 6px 10px;">Pasif</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="/Admin/WidgetsScrollingAnnouncement/Edit/@item.Id" class="btn btn-sm btn-info">
+                                            <i class="fas fa-pencil-alt"></i> Düzenle
+                                        </a>
+                                        <a href="/Admin/WidgetsScrollingAnnouncement/Delete/@item.Id" onclick="return confirm('Bu duyuruyu silmek istediğinize emin misiniz?');" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i> Sil
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center text-muted p-4">Henüz kayıtlı bir duyuru bulunmuyor. Yukarıdaki formdan yeni duyuru ekleyebilirsiniz.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

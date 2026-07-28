@@ -1,0 +1,76 @@
+@model IList<Nop.Plugin.Widgets.ScrollingAnnouncement.Models.AnnouncementModel>
+
+@if (Model != null && Model.Any())
+{
+    @Html.Raw(@"
+    <style>
+        .scrolling-announcement-container {
+            width: 100%;
+            overflow: hidden;
+            background: #4a0e17;
+            color: #ffffff !important;
+            padding: 10px 0;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 15px;
+            z-index: 999;
+        }
+
+        .scrolling-announcement-track {
+            display: flex;
+            white-space: nowrap;
+            will-change: transform;
+            animation: scroll-text 18s linear infinite;
+        }
+
+        .scrolling-announcement-container:hover .scrolling-announcement-track {
+            animation-play-state: paused;
+        }
+
+        .scrolling-announcement-item {
+            display: inline-flex;
+            align-items: center;
+            padding: 0 40px;
+            color: #ffffff !important;
+        }
+
+        .scrolling-announcement-badge {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff !important;
+            padding: 3px 12px;
+            border-radius: 12px;
+            margin-right: 12px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .scrolling-announcement-text {
+            color: #ffffff !important;
+            font-size: 15px;
+        }
+
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+    ")
+
+    <div class="scrolling-announcement-container">
+        <div class="scrolling-announcement-track">
+            @foreach (var item in Model)
+            {
+                <div class="scrolling-announcement-item">
+                    <span class="scrolling-announcement-badge">📢 Duyuru</span>
+                    <span class="scrolling-announcement-text">@item.Text</span>
+                </div>
+            }
+        </div>
+    </div>
+}
