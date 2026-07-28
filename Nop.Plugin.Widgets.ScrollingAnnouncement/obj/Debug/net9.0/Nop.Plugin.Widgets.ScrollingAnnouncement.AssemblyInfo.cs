@@ -11,7 +11,7 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("nopCommerce Education")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Beyzanur")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright © Beyzanur")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
@@ -19,6 +19,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyProductAttribute("Nop.Plugin.Widgets.ScrollingAnnouncement")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Nop.Plugin.Widgets.ScrollingAnnouncement")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyMetadataAttribute("RepositoryUrl", "https://github.com/BeyzanurKarademirli/Nop.Plugin.Widgets.ScrollingAnnouncement")]
 
 // MSBuild WriteCodeFragment sınıfı tarafından oluşturuldu.
 

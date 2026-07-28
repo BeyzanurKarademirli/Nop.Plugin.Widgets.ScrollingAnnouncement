@@ -7,5 +7,5 @@
   "Author": "Beyzanur",
   "DisplayOrder": 1,
   "FileName": "Nop.Plugin.Widgets.ScrollingAnnouncement.dll",
-  "Description": "nopCommerce 4.5.x ve 4.90 için ana sayfada CSS keyframes ile çalışan kayan yazı duyuru eklentisi."
+  "Description": "nopCommerce 4.5.x ve 4.90.x için ana sayfada CSS keyframes ile çalışan kayan yazı duyuru eklentisi."
 }

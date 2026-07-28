@@ -55,7 +55,7 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement
         #region Methods
 
         /// <summary>
-        /// Duyuru widget'ının gösterileceği konumu tek bir alan olarak belirler (Header sonrası / Menü üstü).
+        /// Duyuru widget'ının gösterileceği konumu TEK bir alan olarak belirler (Header sonrası / Menü üstü).
         /// </summary>
         public Task<IList<string>> GetWidgetZonesAsync()
         {
@@ -66,11 +66,19 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement
         }
 
         /// <summary>
-        /// Widget zone çağrıldığında tetiklenecek ViewComponent türünü döndürür.
+        /// Widget zone çağrıldığında tetiklenecek ViewComponent türünü döndürür (nopCommerce 4.90).
         /// </summary>
         public Type GetWidgetViewComponent(string widgetZone)
         {
             return typeof(ScrollingAnnouncementViewComponent);
+        }
+
+        /// <summary>
+        /// Widget zone çağrıldığında tetiklenecek ViewComponent adını döndürür (nopCommerce 4.5.x uyumu).
+        /// </summary>
+        public string GetWidgetViewComponentName(string widgetZone)
+        {
+            return "ScrollingAnnouncement";
         }
 
         /// <summary>
@@ -82,7 +90,7 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement
         }
 
         /// <summary>
-        /// Admin Paneli Yan Menüsüne Özel siteMapNode / AdminMenuItem ekler.
+        /// Admin Paneli Yan Menüsüne Özel Menü Elemanı ekler.
         /// </summary>
         public async Task ManageSiteMapAsync(AdminMenuItem rootNode)
         {

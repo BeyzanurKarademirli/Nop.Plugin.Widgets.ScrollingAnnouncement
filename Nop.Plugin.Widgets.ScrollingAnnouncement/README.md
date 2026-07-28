@@ -21,4 +21,4 @@ nopCommerce 4.5x ve 4.90.x sürümleri için geliştirilmiş, ana sayfada CSS `@
 6. **Kayan Yazı Duyuruları** sayfasından ilk duyurunuzu ekleyin!
 
 ---
-*Geliştirici: Beyzanur*
+*Geliştirici: Beyzanur Karademirli

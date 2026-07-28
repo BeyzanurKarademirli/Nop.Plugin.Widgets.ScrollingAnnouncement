@@ -16,7 +16,7 @@ using Nop.Web.Framework.Mvc.Filters;
 namespace Nop.Plugin.Widgets.ScrollingAnnouncement.Controllers;
 
 [AuthorizeAdmin]
-[Area(AreaNames.ADMIN)]
+[Area("Admin")]
 [AutoValidateAntiforgeryToken]
 public class WidgetsScrollingAnnouncementController : BasePluginController
 {
