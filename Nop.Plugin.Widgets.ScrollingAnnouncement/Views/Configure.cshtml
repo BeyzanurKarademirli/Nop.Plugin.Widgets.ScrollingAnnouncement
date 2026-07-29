@@ -2,23 +2,22 @@
 @{
     Layout = "_ConfigurePlugin";
     var announcements = ViewBag.Announcements as List<Nop.Plugin.Widgets.ScrollingAnnouncement.Models.AnnouncementModel>;
-    bool isEdit = Model != null && Model.Id > 0;
+    var isEdit = Model != null && Model.Id > 0;
 }
 
 <div class="content-header clearfix">
     <h1 class="float-left">
-        Kayan Yazı Duyuruları Yönetimi
+        @T("Plugins.Widgets.ScrollingAnnouncement.PageTitle")
     </h1>
 </div>
 
 <section class="content">
     <div class="container-fluid">
-        <!-- Ekleme / Güncelleme Formu -->
         <div class="card card-default">
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fas fa-edit"></i>
-                    @(isEdit ? "Duyuruyu Düzenle (ID: " + Model.Id + ")" : "Yeni Duyuru Ekle")
+                    @(isEdit ? string.Format(T("Plugins.Widgets.ScrollingAnnouncement.Edit").Text, Model.Id) : T("Plugins.Widgets.ScrollingAnnouncement.AddNew").Text)
                 </h3>
             </div>
             <form asp-controller="WidgetsScrollingAnnouncement" asp-action="@(isEdit ? "Edit" : "Create")" method="post">
@@ -26,16 +25,16 @@
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-md-3">
-                            <label asp-for="Text" class="col-form-label font-weight-bold">Duyuru Metni</label>
+                            <nop-label asp-for="Text" />
                         </div>
                         <div class="col-md-9">
-                            <input asp-for="Text" class="form-control" placeholder="Örn: %20 İndirim Fırsatını Kaçırmayın!" />
+                            <nop-editor asp-for="Text" asp-required="true" />
                             <span asp-validation-for="Text" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3">
-                            <label asp-for="Color" class="col-form-label font-weight-bold">Duyuru Rengi</label>
+                            <nop-label asp-for="Color" />
                         </div>
                         <div class="col-md-9">
                             <input asp-for="Color" type="color" class="form-control form-control-color" value="@(string.IsNullOrWhiteSpace(Model.Color) ? "#4a0e17" : Model.Color)" style="height: 38px; width: 100px; padding: 2px;" />
@@ -44,42 +43,41 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3">
-                            <label asp-for="DisplayOrder" class="col-form-label font-weight-bold">Gösterim Sırası</label>
+                            <nop-label asp-for="DisplayOrder" />
                         </div>
                         <div class="col-md-9">
-                            <input asp-for="DisplayOrder" type="number" class="form-control" value="@Model.DisplayOrder" />
+                            <nop-editor asp-for="DisplayOrder" />
                             <span asp-validation-for="DisplayOrder" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3">
-                            <label asp-for="IsActive" class="col-form-label font-weight-bold">Aktif mi?</label>
+                            <nop-label asp-for="IsActive" />
                         </div>
                         <div class="col-md-9">
                             <div class="form-check pt-2">
                                 <input asp-for="IsActive" type="checkbox" class="form-check-input" style="width: 18px; height: 18px;" />
-                                <label asp-for="IsActive" class="form-check-label ml-2">Evet (Yayında)</label>
+                                <label asp-for="IsActive" class="form-check-label ml-2">@T("Plugins.Widgets.ScrollingAnnouncement.IsActive.Yes")</label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> @(isEdit ? "Güncelle" : "Kaydet")
+                        <i class="fas fa-save"></i> @(isEdit ? T("Plugins.Widgets.ScrollingAnnouncement.Update").Text : T("Plugins.Widgets.ScrollingAnnouncement.Save").Text)
                     </button>
                     @if (isEdit)
                     {
-                        <a href="/Admin/WidgetsScrollingAnnouncement/Configure" class="btn btn-default ml-2">Vazgeç / Yeni Ekle</a>
+                        <a asp-controller="WidgetsScrollingAnnouncement" asp-action="Configure" class="btn btn-default ml-2">@T("Plugins.Widgets.ScrollingAnnouncement.Cancel")</a>
                     }
                 </div>
             </form>
         </div>
 
-        <!-- Kayıtlı Duyurular Tablosu (List) -->
         <div class="card card-default">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fas fa-list"></i> Mevcut Duyurular Listesi
+                    <i class="fas fa-list"></i> @T("Plugins.Widgets.ScrollingAnnouncement.ListTitle")
                 </h3>
             </div>
             <div class="card-body p-0">
@@ -87,11 +85,11 @@
                     <thead>
                         <tr>
                             <th style="width: 60px;">ID</th>
-                            <th>Duyuru Metni</th>
-                            <th style="width: 120px;">Renk</th>
-                            <th style="width: 100px;">Sıra</th>
-                            <th style="width: 100px;">Durum</th>
-                            <th style="width: 150px;">İşlemler</th>
+                            <th>@T("Plugins.Widgets.ScrollingAnnouncement.Fields.Text")</th>
+                            <th style="width: 120px;">@T("Plugins.Widgets.ScrollingAnnouncement.Fields.Color")</th>
+                            <th style="width: 100px;">@T("Plugins.Widgets.ScrollingAnnouncement.Fields.DisplayOrder")</th>
+                            <th style="width: 100px;">@T("Plugins.Widgets.ScrollingAnnouncement.Fields.IsActive")</th>
+                            <th style="width: 180px;">@T("Admin.Common.Actions")</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -109,20 +107,23 @@
                                     <td>
                                         @if (item.IsActive)
                                         {
-                                            <span class="badge badge-success" style="padding: 6px 10px;">Aktif</span>
+                                            <span class="badge badge-success" style="padding: 6px 10px;">@T("Plugins.Widgets.ScrollingAnnouncement.Active")</span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-secondary" style="padding: 6px 10px;">Pasif</span>
+                                            <span class="badge badge-secondary" style="padding: 6px 10px;">@T("Plugins.Widgets.ScrollingAnnouncement.Inactive")</span>
                                         }
                                     </td>
                                     <td>
-                                        <a href="/Admin/WidgetsScrollingAnnouncement/Edit/@item.Id" class="btn btn-sm btn-info">
-                                            <i class="fas fa-pencil-alt"></i> Düzenle
+                                        <a asp-controller="WidgetsScrollingAnnouncement" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                            <i class="fas fa-pencil-alt"></i> @T("Plugins.Widgets.ScrollingAnnouncement.EditButton")
                                         </a>
-                                        <a href="/Admin/WidgetsScrollingAnnouncement/Delete/@item.Id" onclick="return confirm('Bu duyuruyu silmek istediğinize emin misiniz?');" class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash"></i> Sil
-                                        </a>
+                                        <form asp-controller="WidgetsScrollingAnnouncement" asp-action="Delete" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('@T("Plugins.Widgets.ScrollingAnnouncement.DeleteConfirm").Text');">
+                                                <i class="fas fa-trash"></i> @T("Plugins.Widgets.ScrollingAnnouncement.DeleteButton")
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             }
@@ -130,7 +131,7 @@
                         else
                         {
                             <tr>
-                                <td colspan="6" class="text-center text-muted p-4">Henüz kayıtlı bir duyuru bulunmuyor. Yukarıdaki formdan yeni duyuru ekleyebilirsiniz.</td>
+                                <td colspan="6" class="text-center text-muted p-4">@T("Plugins.Widgets.ScrollingAnnouncement.NoRecords")</td>
                             </tr>
                         }
                     </tbody>

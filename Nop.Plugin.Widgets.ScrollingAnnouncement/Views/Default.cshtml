@@ -7,12 +7,11 @@
         .scrolling-announcement-container {
             width: 100%;
             overflow: hidden;
-            background: #4a0e17;
             color: #ffffff !important;
             padding: 10px 0;
             position: relative;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             font-weight: 600;
             font-size: 15px;
             z-index: 999;
@@ -62,7 +61,10 @@
     </style>
     ")
 
-    <div class="scrolling-announcement-container">
+    var firstItem = Model.FirstOrDefault();
+    var bgColor = string.IsNullOrWhiteSpace(firstItem?.Color) ? "#4a0e17" : firstItem.Color;
+
+    <div class="scrolling-announcement-container" style="background-color: @bgColor;">
         <div class="scrolling-announcement-track">
             @foreach (var item in Model)
             {

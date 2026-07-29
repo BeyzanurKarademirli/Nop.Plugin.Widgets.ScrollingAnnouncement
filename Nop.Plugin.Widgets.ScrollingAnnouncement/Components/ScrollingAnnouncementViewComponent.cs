@@ -1,29 +1,33 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Nop.Plugin.Widgets.ScrollingAnnouncement.Models;
 using Nop.Plugin.Widgets.ScrollingAnnouncement.Services;
+using Nop.Services.Localization;
 using Nop.Web.Framework.Components;
 
 namespace Nop.Plugin.Widgets.ScrollingAnnouncement.Components
 {
     /// <summary>
-    /// Sitenin ön yüzünde (Homepage) kayan duyuruları InvokeAsync ile gösteren görsel bileşen.
+    /// Sitenin ön yüzünde ana sayfa üst bölümünde kayan duyuruları InvokeAsync ile gösteren görsel bileşen.
     /// </summary>
     public class ScrollingAnnouncementViewComponent : NopViewComponent
     {
         #region Fields
 
         private readonly IAnnouncementService _announcementService;
+        private readonly ILocalizationService _localizationService;
 
         #endregion
 
         #region Ctor
 
-        public ScrollingAnnouncementViewComponent(IAnnouncementService announcementService)
+        public ScrollingAnnouncementViewComponent(
+            IAnnouncementService announcementService,
+            ILocalizationService localizationService)
         {
             _announcementService = announcementService;
+            _localizationService = localizationService;
         }
 
         #endregion
@@ -42,6 +46,8 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement.Components
                 DisplayOrder = a.DisplayOrder,
                 IsActive = a.IsActive
             }).ToList();
+
+            ViewData["AnnouncementBadge"] = await _localizationService.GetResourceAsync("Plugins.Widgets.ScrollingAnnouncement.AnnouncementBadge");
 
             return View("~/Plugins/Widgets.ScrollingAnnouncement/Views/Default.cshtml", modelList);
         }

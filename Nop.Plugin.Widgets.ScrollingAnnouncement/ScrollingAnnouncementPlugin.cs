@@ -55,14 +55,11 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement
         #region Methods
 
         /// <summary>
-        /// Duyuru widget'ının gösterileceği konumu TEK bir alan olarak belirler (Header sonrası / Menü üstü).
+        /// Duyuru widget'ının gösterileceği konumu ana resmin/slider'ın hemen üstü (HeaderMenuAfter) olarak belirler.
         /// </summary>
         public Task<IList<string>> GetWidgetZonesAsync()
         {
-            return Task.FromResult<IList<string>>(new List<string>
-            {
-                PublicWidgetZones.HeaderAfter
-            });
+            return Task.FromResult<IList<string>>(new List<string> { PublicWidgetZones.HeaderMenuAfter });
         }
 
         /// <summary>
@@ -92,11 +89,11 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement
         /// <summary>
         /// Admin Paneli Yan Menüsüne Özel Menü Elemanı ekler.
         /// </summary>
-        public async Task ManageSiteMapAsync(AdminMenuItem rootNode)
+        public async Task ManageSiteMapAsync(SiteMapNode rootNode)
         {
             var title = await _localizationService.GetResourceAsync("Plugins.Widgets.ScrollingAnnouncement.AdminMenuTitle") ?? "Kayan Yazı Duyuruları";
 
-            var pluginNode = new AdminMenuItem
+            var pluginNode = new SiteMapNode
             {
                 SystemName = "Widgets.ScrollingAnnouncement",
                 Title = title,

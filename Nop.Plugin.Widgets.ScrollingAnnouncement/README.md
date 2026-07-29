@@ -1,24 +1,24 @@
 # nopCommerce Kayan Yazı Duyuru Bandı Eklentisi (Scrolling Announcement Widget)
 
-nopCommerce 4.5x ve 4.90.x sürümleri için geliştirilmiş, ana sayfada CSS `@keyframes` animasyonu ile akıcı kayan duyurular gösteren modüler widget eklentisi.
+nopCommerce **4.5.x** (`net6.0`) sürümü için geliştirilmiş, ana sayfada CSS `@keyframes` animasyonu ile akıcı kayan duyurular gösteren modüler widget eklentisi.
 
-## 🚀 Özellikler
+> **Önemli:** Bu eklenti `net6.0` hedefler ve **nopCommerce 4.50** kaynak kodunda derlenip test edilmelidir. 4.90 (`net9.0`) solution içinde doğrudan derlenemez.
 
-- **Modüler Mimari:** Core dosyalarında hiçbir değişiklik yapılmadan %100 modüler eklenti yapısı.
-- **Pure CSS Animasyon:** `<marquee>` kullanılmadan modern `@@keyframes` ile akıcı kayan yazı animasyonu.
-- **Yönetim Paneli (CRUD):** Admin panelinden duyuru metni, HEX renk kodu, gösterim sırası ve Aktif/Pasif durum yönetimi.
-- **Veritabanı Migration:** `FluentMigrator` mimarisi ile otomatik veritabanı tablosu oluşturma.
-- **Dinamik Sol Menü (SiteMapNode):** Admin paneli sol menüsüne özel "Kayan Yazı Duyuruları" başlığı entegrasyonu.
-- **Temiz Yaşam Döngüsü (Lifecycle):** Kurulumda dil kaynakları yüklenir; kaldırıldığında veritabanı ve dil kaynakları otomatik temizlenir.
+## Özellikler
 
-## 🛠️ Kurulum Adımları
+- **Modüler mimari:** Core dosyalarında değişiklik yok.
+- **Pure CSS animasyon:** `<marquee>` yerine `@keyframes` kullanımı.
+- **Admin CRUD:** Metin, renk, gösterim sırası, aktif/pasif yönetimi.
+- **FluentMigrator:** Kurulumda tablo oluşturma, kaldırmada otomatik silme.
+- **SiteMapNode:** Admin sol menüde kendi yapılandırma sayfası.
+- **DI:** `IAnnouncementService` ve core servisler üzerinden bağımlılık enjeksiyonu.
 
-1. `Nop.Plugin.Widgets.ScrollingAnnouncement` projesini nopCommerce `src/Plugins/` dizinine kopyalayın.
-2. Projeyi derleyin (`dotnet build`).
-3. Admin Paneli -> **Yapılandırma** -> **Yerel Eklentiler** sayfasına gidin.
-4. "Kayan Yazı Duyuru Bandı" eklentisinin yanındaki **Kur (Install)** butonuna ve ardından **Uygulamayı Yeniden Başlat** butonuna tıklayın.
-5. Admin Paneli -> **Yapılandırma** -> **Gereçler (Widgets)** sayfasından eklentiyi **Aktif** hale getirin.
-6. **Kayan Yazı Duyuruları** sayfasından ilk duyurunuzu ekleyin!
+## Kurulum
+
+1. Projeyi nopCommerce 4.50 `src/Plugins/` dizinine kopyalayın.
+2. `dotnet build` ile derleyin.
+3. Admin → **Yapılandırma** → **Yerel Eklentiler** → **Kur** → **Uygulamayı Yeniden Başlat**.
+4. **Kayan Yazı Duyuruları** menüsünden duyuru ekleyin.
 
 ---
-*Geliştirici: Beyzanur Karademirli
+*Geliştirici: Beyzanur*
