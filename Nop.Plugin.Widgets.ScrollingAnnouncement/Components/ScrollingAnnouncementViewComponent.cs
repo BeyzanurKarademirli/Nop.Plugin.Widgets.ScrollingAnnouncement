@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Nop.Plugin.Widgets.ScrollingAnnouncement.Domain;
 using Nop.Plugin.Widgets.ScrollingAnnouncement.Models;
 using Nop.Plugin.Widgets.ScrollingAnnouncement.Services;
 using Nop.Services.Localization;
@@ -17,6 +18,7 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement.Components
 
         private readonly IAnnouncementService _announcementService;
         private readonly ILocalizationService _localizationService;
+        private readonly ScrollingAnnouncementSettings _scrollingAnnouncementSettings;
 
         #endregion
 
@@ -24,10 +26,12 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement.Components
 
         public ScrollingAnnouncementViewComponent(
             IAnnouncementService announcementService,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            ScrollingAnnouncementSettings scrollingAnnouncementSettings)
         {
             _announcementService = announcementService;
             _localizationService = localizationService;
+            _scrollingAnnouncementSettings = scrollingAnnouncementSettings;
         }
 
         #endregion
@@ -47,7 +51,9 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement.Components
                 IsActive = a.IsActive
             }).ToList();
 
-            ViewData["AnnouncementBadge"] = await _localizationService.GetResourceAsync("Plugins.Widgets.ScrollingAnnouncement.AnnouncementBadge");
+            ViewData["BackgroundColor"] = string.IsNullOrWhiteSpace(_scrollingAnnouncementSettings.BackgroundColor)
+                ? "#1F1F2E"
+                : _scrollingAnnouncementSettings.BackgroundColor;
 
             return View("~/Plugins/Widgets.ScrollingAnnouncement/Views/Default.cshtml", modelList);
         }

@@ -3,9 +3,9 @@
   "FriendlyName": "Kayan Yazı Duyuru Bandı (Scrolling Announcement)",
   "SystemName": "Widgets.ScrollingAnnouncement",
   "Version": "1.00",
-  "SupportedVersions": [ "4.50", "4.90" ],
+  "SupportedVersions": [ "4.50" ],
   "Author": "Beyzanur",
   "DisplayOrder": 1,
   "FileName": "Nop.Plugin.Widgets.ScrollingAnnouncement.dll",
-  "Description": "nopCommerce 4.5.x ve 4.90.x için ana sayfada CSS keyframes ile çalışan kayan yazı duyuru eklentisi."
+  "Description": "nopCommerce 4.50.3 için ana sayfada kesintisiz kayan yazı duyuru eklentisi."
 }

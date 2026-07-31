@@ -1,76 +1,101 @@
 @model IList<Nop.Plugin.Widgets.ScrollingAnnouncement.Models.AnnouncementModel>
+@{
+    var bgColor = ViewData["BackgroundColor"] as string;
+    if (string.IsNullOrWhiteSpace(bgColor))
+    {
+        bgColor = "#FFFDE7";
+    }
+}
 
 @if (Model != null && Model.Any())
 {
-    @Html.Raw(@"
+    @Html.Raw($@"
     <style>
-        .scrolling-announcement-container {
+        .scrolling-announcement-container {{
             width: 100%;
             overflow: hidden;
-            color: #ffffff !important;
+            background-color: {bgColor};
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
             padding: 10px 0;
             position: relative;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            margin-bottom: 10px;
-            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+            margin-bottom: 15px;
+            font-weight: 700;
             font-size: 15px;
             z-index: 999;
-        }
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }}
 
-        .scrolling-announcement-track {
+        .scrolling-announcement-track {{
             display: flex;
+            align-items: center;
             white-space: nowrap;
+            width: max-content;
             will-change: transform;
-            animation: scroll-text 18s linear infinite;
-        }
+            animation: scroll-text-continuous 18s linear infinite;
+            -webkit-animation: scroll-text-continuous 18s linear infinite;
+        }}
 
-        .scrolling-announcement-container:hover .scrolling-announcement-track {
+        .scrolling-announcement-container:hover .scrolling-announcement-track {{
             animation-play-state: paused;
-        }
+            -webkit-animation-play-state: paused;
+        }}
 
-        .scrolling-announcement-item {
+        .scrolling-announcement-item {{
             display: inline-flex;
             align-items: center;
-            padding: 0 40px;
-            color: #ffffff !important;
-        }
+            padding: 0 45px;
+        }}
 
-        .scrolling-announcement-badge {
-            background: rgba(255, 255, 255, 0.25);
-            color: #ffffff !important;
-            padding: 3px 12px;
-            border-radius: 12px;
-            margin-right: 12px;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .scrolling-announcement-text {
-            color: #ffffff !important;
+        .scrolling-announcement-text {{
             font-size: 15px;
-        }
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }}
 
-        @keyframes scroll-text {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
+        @keyframes scroll-text-continuous {{
+            0% {{
+                transform: translate3d(0, 0, 0);
+                -webkit-transform: translate3d(0, 0, 0);
+            }}
+            100% {{
+                transform: translate3d(-50%, 0, 0);
+                -webkit-transform: translate3d(-50%, 0, 0);
+            }}
+        }}
+
+        @-webkit-keyframes scroll-text-continuous {{
+            0% {{
+                -webkit-transform: translate3d(0, 0, 0);
+            }}
+            100% {{
+                -webkit-transform: translate3d(-50%, 0, 0);
+            }}
+        }}
     </style>
     ")
 
-    var firstItem = Model.FirstOrDefault();
-    var bgColor = string.IsNullOrWhiteSpace(firstItem?.Color) ? "#4a0e17" : firstItem.Color;
-
-    <div class="scrolling-announcement-container" style="background-color: @bgColor;">
+    <div class="scrolling-announcement-container">
         <div class="scrolling-announcement-track">
+            <!-- 1. Tur Duyurular -->
             @foreach (var item in Model)
             {
+                var textColor = string.IsNullOrWhiteSpace(item.Color) ? "#111111" : item.Color;
                 <div class="scrolling-announcement-item">
-                    <span class="scrolling-announcement-badge">📢 Duyuru</span>
-                    <span class="scrolling-announcement-text">@item.Text</span>
+                    <span class="scrolling-announcement-text" style="color: @textColor !important;">@item.Text</span>
+                </div>
+            }
+
+            <!-- 2. Tur Duyurular (Kesintisiz Sonsuz Akış) -->
+            @foreach (var item in Model)
+            {
+                var textColor = string.IsNullOrWhiteSpace(item.Color) ? "#111111" : item.Color;
+                <div class="scrolling-announcement-item">
+                    <span class="scrolling-announcement-text" style="color: @textColor !important;">@item.Text</span>
                 </div>
             }
         </div>

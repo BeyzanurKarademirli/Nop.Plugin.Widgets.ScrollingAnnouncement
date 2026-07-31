@@ -42,11 +42,11 @@
   </ItemGroup>
 
   <Target Name="CopyPluginFiles" AfterTargets="Build">
-    <Copy SourceFiles="plugin.json" DestinationFolder="$(OutDir)" />
+    <Copy SourceFiles="plugin.json" DestinationFolder="$(OutDir)" SkipUnchangedFiles="false" />
     <ItemGroup>
       <PluginViews Include="Views\**\*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(PluginViews)" DestinationFolder="$(OutDir)\Views\%(RecursiveDir)" />
+    <Copy SourceFiles="@(PluginViews)" DestinationFolder="$(OutDir)\Views\%(RecursiveDir)" SkipUnchangedFiles="false" />
   </Target>
 
   <!-- This target execute after "Build" target -->
