@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Nop.Core;
 using Nop.Core.Domain.Cms;
@@ -97,12 +98,21 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement
             {
                 SystemName = "Widgets.ScrollingAnnouncement",
                 Title = title,
-                Url = _webHelper.GetStoreLocation() + "Admin/WidgetsScrollingAnnouncement/Configure",
+                ControllerName = "WidgetsScrollingAnnouncement",
+                ActionName = "Configure",
                 IconClass = "far fa-dot-circle",
                 Visible = true
             };
 
-            rootNode.ChildNodes.Add(pluginNode);
+            var configNode = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Configuration");
+            if (configNode != null)
+            {
+                configNode.ChildNodes.Add(pluginNode);
+            }
+            else
+            {
+                rootNode.ChildNodes.Add(pluginNode);
+            }
         }
 
         /// <summary>

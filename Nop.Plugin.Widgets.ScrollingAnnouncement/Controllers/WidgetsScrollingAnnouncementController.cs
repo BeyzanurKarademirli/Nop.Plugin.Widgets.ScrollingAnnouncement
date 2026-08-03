@@ -57,48 +57,6 @@ namespace Nop.Plugin.Widgets.ScrollingAnnouncement.Controllers
         [HttpGet]
         public async Task<IActionResult> Configure()
         {
-            try
-            {
-                await _localizationService.AddOrUpdateLocaleResourceAsync(new Dictionary<string, string>
-                {
-                    ["Plugins.Widgets.ScrollingAnnouncement.AdminMenuTitle"] = "Kayan Yazı Duyuruları",
-                    ["Plugins.Widgets.ScrollingAnnouncement.PageTitle"] = "Kayan Yazı Duyuruları Yapılandırması",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Edit"] = "Duyuru Düzenle #{0}",
-                    ["Plugins.Widgets.ScrollingAnnouncement.AddNew"] = "Yeni Duyuru Ekle",
-                    ["Plugins.Widgets.ScrollingAnnouncement.ListTitle"] = "Mevcut Duyurular Listesi",
-                    ["Plugins.Widgets.ScrollingAnnouncement.GeneralSettings"] = "Genel Ayarlar (Arka Plan)",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Fields.BackgroundColor"] = "Genel Arka Plan Rengi",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Fields.BackgroundColor.Hint"] = "Tüm duyuru bandının arkasında yer alan genel arka plan rengini belirler.",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Fields.Text"] = "Duyuru Metni",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Fields.Text.Hint"] = "Kayan yazıda görünecek duyuru metnini giriniz.",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Fields.Color"] = "Duyuru Yazı Rengi",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Fields.Color.Hint"] = "Bu duyuruya özel HEX renk kodunu seçiniz (örn: #ef4444 veya #22c55e).",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Fields.DisplayOrder"] = "Gösterim Sırası",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Fields.DisplayOrder.Hint"] = "Duyurunun listedeki sıralama değerini giriniz.",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Fields.IsActive"] = "Aktif mi?",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Fields.IsActive.Hint"] = "Duyurunun yayında olup olmayacağını belirler.",
-                    ["Plugins.Widgets.ScrollingAnnouncement.IsActive.Yes"] = "Evet",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Active"] = "Aktif",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Inactive"] = "Pasif",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Save"] = "Kaydet",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Update"] = "Güncelle",
-                    ["Plugins.Widgets.ScrollingAnnouncement.Cancel"] = "İptal",
-                    ["Plugins.Widgets.ScrollingAnnouncement.EditButton"] = "Düzenle",
-                    ["Plugins.Widgets.ScrollingAnnouncement.DeleteButton"] = "Sil",
-                    ["Plugins.Widgets.ScrollingAnnouncement.DeleteConfirm"] = "Bu duyuruyu silmek istediğinizden emin misiniz?",
-                    ["Plugins.Widgets.ScrollingAnnouncement.NoRecords"] = "Henüz eklenmiş bir duyuru bulunmamaktadır.",
-                    ["Plugins.Widgets.ScrollingAnnouncement.TextRequired"] = "Duyuru metni boş bırakılamaz.",
-                    ["Plugins.Widgets.ScrollingAnnouncement.AddedSuccess"] = "Duyuru başarıyla eklendi.",
-                    ["Plugins.Widgets.ScrollingAnnouncement.UpdatedSuccess"] = "Duyuru başarıyla güncellendi.",
-                    ["Plugins.Widgets.ScrollingAnnouncement.DeletedSuccess"] = "Duyuru başarıyla silindi.",
-                    ["Plugins.Widgets.ScrollingAnnouncement.SettingsSaved"] = "Genel ayarlar başarıyla kaydedildi."
-                });
-            }
-            catch (Exception ex)
-            {
-                await _logger.ErrorAsync("Kayan duyuru dil kaynakları yüklenirken hata oluştu.", ex);
-            }
-
             var modelList = new List<AnnouncementModel>();
 
             try
